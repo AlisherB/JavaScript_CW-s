@@ -5,6 +5,7 @@ function AddTask(){
     var p = document.createElement("p")
     p.innerHTML = text[0].value
     p.setAttribute("id", countP++)
+    p.style.margin="3px 0px"
     var id_P = p.getAttribute("id")
 
     //Edit
@@ -15,8 +16,18 @@ function AddTask(){
     var id_Edit = edit.getAttribute("id")
     edit.onclick = function()
     {
-        var editTask = document.getElementsByTagName("p")
-        
+        //debugger
+        p = this.parentElement
+        var editTask = document.getElementsByTagName("p").value
+        var input = document.createElement("input");
+        input.setAttribute("type", "text");
+        //input.value = editTask.value
+        var newP = p
+        newP.replaceChild(input, editTask)
+        var save = document.createElement("button")
+        save.innerHTML = "Save"
+        newP.replaceChild(save, edit)
+        document.body.replaceChild(newP, p1)
     }
 
     //Remove
@@ -34,8 +45,8 @@ function AddTask(){
         var removeR = document.getElementById(id_Remove)
         document.body.removeChild(removeR)
     }
-    
-    document.body.appendChild(p)
-    document.body.appendChild(edit)
-    document.body.appendChild(remove)
+    var div = document.getElementById("div")
+    div.appendChild(p)
+    div.appendChild(edit)
+    div.appendChild(remove)
 }
