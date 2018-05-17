@@ -1,52 +1,53 @@
-function AddTask(){
-    //P
-    var text = document.getElementsByName("textField")
-    var countP = 0
-    var p = document.createElement("p")
-    p.innerHTML = text[0].value
-    p.setAttribute("id", countP++)
-    p.style.margin="3px 0px"
-    var id_P = p.getAttribute("id")
+var add_btn = document.getElementsByName('add_btn');
+var parent_div = document.createElement('div');
+var child_div = document.createElement('div');
+var edit_btn = document.createElement('button');
+edit_btn.innerText='Edit';
+var remove_btn = document.createElement('button');
+remove_btn.innerText='Remove';
+var save_btn=document.createElement('button');
+save_btn.innerText='Save';
+var input=document.createElement('input');
+input.setAttribute("type", "text");
 
-    //Edit
-    var countEdit = 0
-    var edit = document.createElement("button")
-    edit.innerHTML = "Edit"
-    edit.setAttribute("id", countEdit++)
-    var id_Edit = edit.getAttribute("id")
-    edit.onclick = function()
-    {
-        //debugger
-        p = this.parentElement
-        var editTask = document.getElementsByTagName("p").value
-        var input = document.createElement("input");
-        input.setAttribute("type", "text");
-        //input.value = editTask.value
-        var newP = p
-        newP.replaceChild(input, editTask)
-        var save = document.createElement("button")
-        save.innerHTML = "Save"
-        newP.replaceChild(save, edit)
-        document.body.replaceChild(newP, p1)
-    }
-
-    //Remove
-    var countRemove = 0
-    var remove = document.createElement("button")
-    remove.innerHTML = "Remove"
-    remove.setAttribute("id", countRemove++)
-    var id_Remove = remove.getAttribute("id")
-    remove.onclick = function()
-    {
-        var removeTask = document.getElementById(id_P)
-        document.body.removeChild(removeTask)
-        var removeE = document.getElementById(id_Edit)
-        document.body.removeChild(removeE)
-        var removeR = document.getElementById(id_Remove)
-        document.body.removeChild(removeR)
-    }
-    var div = document.getElementById("div")
-    div.appendChild(p)
-    div.appendChild(edit)
-    div.appendChild(remove)
+function Add_Task(){
+    var main_input = document.getElementById("main_input").value
+    child_div.innerText = main_input;
+    document.body.appendChild(parent_div);
+    parent_div.appendChild(child_div);
+    parent_div.appendChild(edit_btn);
+    parent_div.appendChild(remove_btn);
 }
+
+function Edit_Task(){
+    var div=this.parentElement;
+    var textDiv=div.querySelector('div');
+    input.value=textDiv.value;
+    var newDiv=div;
+    newDiv.replaceChild(input, textDiv);
+    newDiv.replaceChild(save_btn, edit_btn);
+    document.body.replaceChild(newDiv, div);
+}
+
+function Save_Edited_Task(){
+    var div = this.parentElement;
+    var input = div.querySelector('input')
+    child_div.innerText = input.value;
+    var newDiv = div;
+    newDiv.replaceChild(child_div, input);
+    newDiv.replaceChild(edit_btn, save_btn);
+    document.body.replaceChild(newDiv, div);
+}
+
+function Remove_Task(){
+    var div=this.parentElement;
+    var newDiv=div;
+    newDiv.appendChild(child_div);
+    newDiv.appendChild(edit_btn);
+    document.body.removeChild(div);
+}
+
+//add_btn.onclick = Add_Task;
+save_btn.onclick = Save_Edited_Task;
+edit_btn.onclick = Edit_Task;    
+remove_btn.onclick = Remove_Task;
